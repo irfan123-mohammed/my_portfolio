@@ -1,0 +1,21 @@
+name : portfolio workflow
+
+on:
+  push:
+     branches:
+         - main
+
+jobs:
+   portfolio_workflow:
+       runs-on: ubuntu-latest
+       steps:
+          - name: checkout_workflow   ##This downloads your code from the GitHub repository to the virtual machine.
+            uses: actions/checkout@v4
+          - name: setup_nodejs    ##Needed because the next tool (htmlhint) is a Node.js-based package.
+            uses: actions/setup-node@v4      
+            with: 
+               node-version: '18'
+          - name: html_hint       ##This tool will help validate or "lint" your HTML code.
+            run: npm install -g htmlhint
+          - name: lint_html         ##Runs htmlhint on all HTML files in your project using a wildcard: **/*.html It will check for Syntax errors,Missing tags,Bad nesting,Inline styles etc.
+            run: htmlhint **/*.html
