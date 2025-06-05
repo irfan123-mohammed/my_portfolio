@@ -1,5 +1,7 @@
 name : portfolio workflow
 
+permissions:
+  contents: write
 on:
   push:
      branches:
@@ -19,3 +21,9 @@ jobs:
             run: npm install -g htmlhint
           - name: lint_html         ##Runs htmlhint on all HTML files in your project using a wildcard: **/*.html It will check for Syntax errors,Missing tags,Bad nesting,Inline styles etc.
             run: htmlhint **/*.html
+          - name: Deploy to GitHub Pages
+            uses: peaceiris/actions-gh-pages@v3
+            with:
+               github_token: ${{ secrets.GITHUB_TOKEN }}
+               publish_dir: ./my_portfolio
+
